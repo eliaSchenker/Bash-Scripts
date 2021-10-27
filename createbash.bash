@@ -5,6 +5,20 @@
 #Beschreibung: Kreiert ein neues Bash File mit Shebang Zeile und Header
 #-------------------
 
+#Check if the correct amount of parameters were given
+if ! [ $# -eq 2 ]
+then
+echo "Falsche Anzahl an Parametern - Verwende createbash <path> <description>"
+exit 1
+fi
+
+#Check if file doesn't exist already
+if test -f $1
+then
+echo "File exisitiert bereits"
+exit 1
+fi
+
 #Shebang-Zeile
 shebang="#!/bin/bash\n"
 #Get current date
@@ -19,9 +33,5 @@ line="#-----------------------\n"
 #Create the final output
 text="$shebang$line$author$aufrufText$beschreibung$line"
 
-#Check if file doesnt exist and export
-if test -f "$file"; then
-   echo "File existiert bereits!"
-else
-   echo -e $text > $file
-fi
+#Export file
+echo -e $text > $file
